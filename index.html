@@ -521,6 +521,10 @@ function reveal(root = document){
 
 </script>
 <script>
+const categorias = [
+  ['Motor','⚙️'],['Travagem','🛑'],['Suspensão','🔩'],['Elétrica','⚡'],
+  ['Arrefecimento','❄️'],['Iluminação','💡'],['Pneus','🛞'],['Carroçaria','🚗']
+];
 const parceiros = [
   {cor:'c1', nome:'Leiria Peças',  sigla:'LP', desc:'Peças originais e equivalentes', local:'Leiria',         nota:'4.8'},
   {cor:'c2', nome:'Leiria Motors', sigla:'LM', desc:'Peças multimarca',              local:'Marinha Grande', nota:'4.6'},
@@ -530,10 +534,6 @@ const lojas = [
   {nome:'Leiria Peças',  sigla:'LP', cor:'#2563eb', tipo:'Loja', info:'Rua das Peças 12, Leiria',           coords:[39.743,-8.807], gmaps:'https://maps.google.com/?q=39.743,-8.807'},
   {nome:'Leiria Motors', sigla:'LM', cor:'#db2777', tipo:'Loja', info:'Av. da Liberdade 45, Marinha Grande', coords:[39.752,-8.932], gmaps:'https://maps.google.com/?q=39.752,-8.932'},
   {nome:'Centro Auto',   sigla:'CA', cor:'#059669', tipo:'Loja', info:'Parque Industrial, Leiria',           coords:[39.730,-8.780], gmaps:'https://maps.google.com/?q=39.730,-8.780'}
-];
-const categorias = [
-  ['Motor','⚙️'],['Travagem','🛑'],['Suspensão','🔩'],['Elétrica','⚡'],
-  ['Arrefecimento','❄️'],['Iluminação','💡'],['Pneus','🛞'],['Carroçaria','🚗']
 ];
 const iconeCat = Object.fromEntries(categorias);
 const pecas = [
