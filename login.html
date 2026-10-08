@@ -4,76 +4,83 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entrar | AutoLeiria</title>
-<title>Entrar | LisAM</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#f4f6f8; --card:#fff; --txt:#1f2933; --muted:#6b7280; --line:#e5e7eb;
-    --erro:#dc2626; --ok:#16a34a;
-    --c1:#2563eb; --c2:#db2777; --c3:#059669;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt)}
-  .login-grid{max-width:1000px;margin:0 auto;padding:40px 16px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;min-height:80vh}
-  .lado h1{font-size:clamp(24px,3vw,32px);margin:0 0 12px}
-  .lado p{color:var(--muted);line-height:1.6;margin:0 0 24px}
-  .lista{display:flex;flex-direction:column;gap:10px}
-  .lista > div{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:14px;transition:.2s}
-  .lista > div:hover{transform:translateX(4px)}
-  .lista i{width:10px;height:10px;border-radius:50%;background:var(--c1);flex-shrink:0}
-  .lista b{font-weight:600}
-  .lista span{color:var(--muted);margin-left:auto;font-size:13px}
-  .lista .c-c1 i{background:var(--c1)} .lista .c-c1 b{color:var(--c1)}
-  .lista .c-c2 i{background:var(--c2)} .lista .c-c2 b{color:var(--c2)}
-  .lista .c-c3 i{background:var(--c3)} .lista .c-c3 b{color:var(--c3)}
-
-  .form-wrap{display:flex;justify-content:center}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;width:100%;max-width:400px;box-shadow:0 10px 30px rgba(0,0,0,.05)}
-  .card h2{margin:0 0 4px;font-size:22px}
-  .card .sub{color:var(--muted);font-size:14px;margin:0 0 20px}
-  .campo{margin-bottom:16px;display:flex;flex-direction:column;gap:6px}
-  .campo label{font-size:13px;font-weight:600;color:var(--txt)}
-  .campo input{padding:11px 14px;border:1px solid var(--line);border-radius:9px;font-size:14px;background:#fff;transition:.15s}
-  .campo input:focus{outline:none;border-color:var(--c1);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
-  .pw{position:relative;display:flex}
-  .pw input{flex:1;padding-right:80px}
-  .pw .ver{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--c1);font-size:13px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:6px}
-  .pw .ver:hover{background:rgba(37,99,235,.08)}
-  .linha{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin:8px 0 18px;color:var(--muted)}
-  .linha label{display:flex;align-items:center;gap:6px;cursor:pointer}
-  .linha a{color:var(--c1);text-decoration:none}
-  .linha a:hover{text-decoration:underline}
-  .erro{background:#fee2e2;color:var(--erro);padding:10px 14px;border-radius:8px;font-size:13px;margin:0 0 14px;animation:shake .35s}
-  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-  .entrar{width:100%;padding:12px;border:0;border-radius:9px;background:var(--txt);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:.15s}
-  .entrar:hover{opacity:.88}
-  .entrar:disabled{opacity:.6;cursor:not-allowed}
-  .novo{text-align:center;font-size:13px;color:var(--muted);margin:18px 0 0}
-  .novo a{color:var(--c1);text-decoration:none;font-weight:600}
-  .novo a:hover{text-decoration:underline}
-
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--txt);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;transition:.3s;z-index:9999;opacity:0}
-  .toast.on{transform:translateX(-50%) translateY(0);opacity:1}
-
-  @media(max-width:780px){.login-grid{grid-template-columns:1fr;gap:24px}}
+:root{
+  --bg:#f4f6f8; --card:#fff; --txt:#1f2933; --muted:#6b7280; --line:#e5e7eb;
+  --ok:#16a34a; --esgotado:#dc2626;
+  --c1:#2563eb; --c2:#db2777; --c3:#059669;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt)}
+header.top{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100}
+.top-inner{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:18px}
+.brand{font-weight:800;font-size:18px;color:var(--txt);text-decoration:none;letter-spacing:-.02em}
+.brand span{color:var(--c1)}
+.top nav{display:flex;gap:16px;margin-left:auto;align-items:center}
+.top nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:6px 10px;border-radius:8px;transition:.15s;cursor:pointer}
+.top nav a:hover{color:var(--txt);background:#f1f5f9}
+.top nav a.cta{background:var(--txt);color:#fff}
+.top nav a.cta:hover{opacity:.88;background:var(--txt)}
+.login-grid{max-width:1000px;margin:0 auto;padding:40px 16px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;min-height:80vh}
+.lado h1{font-size:clamp(24px,3vw,32px);margin:0 0 12px}
+.lado p{color:var(--muted);line-height:1.6;margin:0 0 24px}
+.lista{display:flex;flex-direction:column;gap:10px}
+.lista > div{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:14px;transition:.2s}
+.lista > div:hover{transform:translateX(4px)}
+.lista i{width:10px;height:10px;border-radius:50%;background:var(--c1);flex-shrink:0}
+.lista b{font-weight:600}
+.lista span{color:var(--muted);margin-left:auto;font-size:13px}
+.lista .c-c1 i{background:var(--c1)} .lista .c-c1 b{color:var(--c1)}
+.lista .c-c2 i{background:var(--c2)} .lista .c-c2 b{color:var(--c2)}
+.lista .c-c3 i{background:var(--c3)} .lista .c-c3 b{color:var(--c3)}
+.form-wrap{display:flex;justify-content:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;width:100%;max-width:400px;box-shadow:0 10px 30px rgba(0,0,0,.05)}
+.card h2{margin:0 0 4px;font-size:22px}
+.card .sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+.campo{margin-bottom:16px;display:flex;flex-direction:column;gap:6px}
+.campo label{font-size:13px;font-weight:600;color:var(--txt)}
+.campo input{padding:11px 14px;border:1px solid var(--line);border-radius:9px;font-size:14px;background:#fff;transition:.15s}
+.campo input:focus{outline:none;border-color:var(--c1);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.pw{position:relative;display:flex}
+.pw input{flex:1;padding-right:80px}
+.pw .ver{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--c1);font-size:13px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:6px}
+.pw .ver:hover{background:rgba(37,99,235,.08)}
+.linha{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin:8px 0 18px;color:var(--muted)}
+.linha label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.linha a{color:var(--c1);text-decoration:none}
+.linha a:hover{text-decoration:underline}
+.erro{background:#fee2e2;color:var(--esgotado);padding:10px 14px;border-radius:8px;font-size:13px;margin:0 0 14px}
+.erro.shake{animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.entrar{width:100%;padding:12px;border:0;border-radius:9px;background:var(--txt);color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:.15s}
+.entrar:hover{opacity:.88}
+.entrar:disabled{opacity:.6;cursor:not-allowed}
+.novo{text-align:center;font-size:13px;color:var(--muted);margin:18px 0 0}
+.novo a{color:var(--c1);text-decoration:none;font-weight:600}
+.novo a:hover{text-decoration:underline}
+footer.foot{background:var(--card);border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--txt);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;transition:.3s;z-index:9999;opacity:0;pointer-events:none}
+.toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:780px){
+  .login-grid{grid-template-columns:1fr;gap:24px}
+  .top nav a:not(.cta){display:none}
+}
 </style>
 </head>
 <body>
-<main class="login-grid">
-<header>
-  <a class="logo" href="index.html">LisAM</a>
-  <nav>
-    <a href="index.html#parceiros">Parceiros</a>
-    <a href="index.html#lojas">Lojas</a>
-    <a href="index.html#projeto">O projeto</a>
-    <a href="index.html#pecas">Peças</a>
-  </nav>
-  <button class="hbtn" id="themeToggle" onclick="toggleTheme()">Modo escuro</button>
+
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand">Auto<span>Leiria</span></a>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="stock.html">Stock</a>
+      <a href="login.html" class="cta">Entrar</a>
+    </nav>
+  </div>
 </header>
 
-<main>
+<main class="login-grid">
   <div class="lado">
     <h1>Bem-vindo de volta à oficina.</h1>
     <p>Entre na sua conta para reservar peças, acompanhar encomendas e levantar na loja ou receber no próprio dia.</p>
@@ -115,6 +122,7 @@
   </div>
 </main>
 
+<footer class="foot">© AutoLeiria · Marketplace automóvel B2B · Leiria</footer>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -124,19 +132,15 @@ function toast(msg){
   clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('on'), 2400);
 }
 
-/* Mostrar/ocultar password */
 $('#ver').addEventListener('click', () => {
   const p = $('#pass');
   const mostrar = p.type === 'password';
   p.type = mostrar ? 'text' : 'password';
   $('#ver').textContent = mostrar ? 'Ocultar' : 'Mostrar';
 });
-
-/* Links */
 $('#esqueci').addEventListener('click', e => { e.preventDefault(); toast('Pedido de recuperação enviado (demo).'); });
-$('#pedir').addEventListener('click', e => { e.preventDefault(); toast('Pedido de acesso enviado (demo).'); });
+$('#pedir').addEventListener('click',   e => { e.preventDefault(); toast('Pedido de acesso enviado (demo).'); });
 
-/* Login (demo) */
 const utilizadoresDemo = {
   'oficina@exemplo.pt': { nome:'Oficina Demo', pass:'123456' },
   'demo@autoleiria.pt': { nome:'Demo',         pass:'demo' }
@@ -159,26 +163,23 @@ $('#loginForm').addEventListener('submit', e => {
     erro.style.display = 'block';
     return;
   }
-
   const u = utilizadoresDemo[email];
   if (u && u.pass === pass){
     erro.style.display = 'none';
-    $('#btnEntrar').disabled = true;
-    $('#btnEntrar').textContent = 'A entrar…';
+    const btn = $('#btnEntrar');
+    btn.disabled = true; btn.textContent = 'A entrar…';
     toast('Bem-vindo, ' + u.nome + '!');
     setTimeout(() => {
-      $('#btnEntrar').textContent = 'Entrado ✓';
-      $('#btnEntrar').style.background = 'var(--ok)';
+      btn.textContent = 'Entrado ✓';
+      btn.style.background = 'var(--ok)';
+      setTimeout(() => location.href = 'index.html', 700);
     }, 600);
     return;
   }
-
   tentativas++;
   erro.textContent = 'Email ou palavra-passe incorretos.';
   erro.style.display = 'block';
-  erro.style.animation = 'none';
-  void erro.offsetWidth;
-  erro.style.animation = 'shake .35s';
+  erro.classList.remove('shake'); void erro.offsetWidth; erro.classList.add('shake');
   toast('Credenciais inválidas (demo: oficina@exemplo.pt / 123456)');
 });
 </script>

@@ -6,102 +6,102 @@
 <title>AutoLeiria, marketplace automóvel B2B</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-  :root{
-    --bg:#f4f6f8; --card:#fff; --txt:#1f2933; --muted:#6b7280; --line:#e5e7eb;
-    --c1:#2563eb; --c2:#db2777; --c3:#059669;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt)}
-  .wrap{max-width:1100px;margin:0 auto;padding:0 16px 60px}
-
-  /* HERO */
-  .hero{text-align:center;padding:60px 16px 40px}
-  .hero h1{font-size:clamp(26px,4vw,40px);margin:0 0 12px}
-  .hero p{color:var(--muted);max-width:640px;margin:0 auto 24px}
-  .procura{display:flex;gap:8px;max-width:520px;margin:0 auto}
-  .procura input{flex:1;padding:12px 16px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--card)}
-  .procura button{padding:12px 22px;border:0;border-radius:10px;background:var(--txt);color:#fff;font-size:15px;cursor:pointer;transition:.15s}
-  .procura button:hover{opacity:.85}
-
-  section{margin-bottom:44px}
-  h2{font-size:22px;margin:0 0 4px}
-  .sub{color:var(--muted);margin:0 0 18px;font-size:14px}
-
-  /* PARCEIROS */
-  .parceiros{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-  .parceiro{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px;position:relative;transition:.2s;cursor:pointer}
-  .parceiro:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.06)}
-  .parceiro i{width:10px;height:10px;border-radius:50%;background:var(--c1);position:absolute;top:16px;right:16px}
-  .parceiro b{font-size:16px}
-  .parceiro b small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
-  .parceiro span{font-size:13px;color:var(--muted)}
-  .parceiro .n{color:var(--txt);font-weight:600}
-  .parceiro.c-c1 i{background:var(--c1)} .parceiro.c-c1 b{color:var(--c1)}
-  .parceiro.c-c2 i{background:var(--c2)} .parceiro.c-c2 b{color:var(--c2)}
-  .parceiro.c-c3 i{background:var(--c3)} .parceiro.c-c3 b{color:var(--c3)}
-
-  /* MAPA */
-  .mapa-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px}
-  .leg{display:flex;gap:14px;flex-wrap:wrap;font-size:13px}
-  .leg span{display:inline-flex;align-items:center;gap:6px}
-  .leg span::before{content:"";width:10px;height:10px;border-radius:50%;background:currentColor}
-  .leg .c-c1{color:var(--c1)} .leg .c-c2{color:var(--c2)} .leg .c-c3{color:var(--c3)}
-  #mapa{height:380px;border-radius:12px;border:1px solid var(--line);overflow:hidden}
-  .pin{width:30px;height:30px;border-radius:50%;background:var(--c,#2563eb);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)}
-
-  /* SOBRE */
-  .sobre{display:grid;grid-template-columns:1fr 1fr;gap:32px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px}
-  .lead{color:var(--muted);line-height:1.6}
-  .pontos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .pontos div h3{margin:0 0 4px;font-size:15px}
-  .pontos div p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
-
-  /* CATEGORIAS */
-  .cats{display:flex;flex-wrap:wrap;gap:8px}
-  .cats a{text-decoration:none;color:var(--txt);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:14px;transition:.15s}
-  .cats a:hover{background:var(--txt);color:#fff;border-color:var(--txt)}
-
-  /* PEÇAS */
-  .pecas{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-  .peca{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:.2s;border-top:4px solid var(--c1)}
-  .peca:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.07)}
-  .peca.c-c1{border-top-color:var(--c1)}
-  .peca.c-c2{border-top-color:var(--c2)}
-  .peca.c-c3{border-top-color:var(--c3)}
-  .peca .foto{height:120px;background:linear-gradient(135deg,#eef2f7,#e2e8f0);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative}
-  .peca .foto em{color:var(--muted);font-size:12px;font-style:normal}
-  .peca .foto strong{font-size:11px;text-transform:uppercase;letter-spacing:.05em;background:#fff;padding:3px 10px;border-radius:999px;color:var(--txt)}
-  .peca .pb{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
-  .peca h3{margin:0;font-size:15px}
-  .peca .ref{margin:0;font-size:12px;color:var(--muted);font-family:ui-monospace,monospace}
-  .peca .loja{margin:0;font-size:13px;color:var(--muted)}
-  .peca .pf{margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:10px}
-  .peca .preco{font-size:18px;font-weight:700}
-  .peca .res{padding:8px 14px;border:0;border-radius:8px;background:var(--txt);color:#fff;font-size:13px;cursor:pointer;transition:.15s}
-  .peca .res:hover{opacity:.85}
-  .peca .res.ok{background:var(--c3)}
-
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--txt);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;transition:.3s;z-index:9999;opacity:0}
-  .toast.on{transform:translateX(-50%) translateY(0);opacity:1}
-
-  @media(max-width:720px){
-    .sobre{grid-template-columns:1fr}
-    .pontos{grid-template-columns:1fr}
-  }
+:root{
+  --bg:#f4f6f8; --card:#fff; --txt:#1f2933; --muted:#6b7280; --line:#e5e7eb;
+  --ok:#16a34a; --baixo:#d97706; --esgotado:#dc2626;
+  --c1:#2563eb; --c2:#db2777; --c3:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px 60px}
+h2{font-size:22px;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 18px;font-size:14px}
+section{margin-bottom:44px}
+header.top{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100}
+.top-inner{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:18px}
+.brand{font-weight:800;font-size:18px;color:var(--txt);text-decoration:none;letter-spacing:-.02em}
+.brand span{color:var(--c1)}
+.top nav{display:flex;gap:16px;margin-left:auto;align-items:center}
+.top nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:6px 10px;border-radius:8px;transition:.15s;cursor:pointer}
+.top nav a:hover{color:var(--txt);background:#f1f5f9}
+.top nav a.cta{background:var(--txt);color:#fff}
+.top nav a.cta:hover{opacity:.88;background:var(--txt)}
+.hero{text-align:center;padding:60px 16px 40px}
+.hero h1{font-size:clamp(26px,4vw,40px);margin:0 0 12px}
+.hero p{color:var(--muted);max-width:640px;margin:0 auto 24px}
+.procura{display:flex;gap:8px;max-width:520px;margin:0 auto}
+.procura input{flex:1;padding:12px 16px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--card)}
+.procura input:focus{outline:none;border-color:var(--c1);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.procura button{padding:12px 22px;border:0;border-radius:10px;background:var(--txt);color:#fff;font-size:15px;cursor:pointer;transition:.15s}
+.procura button:hover{opacity:.85}
+.parceiros{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.parceiro{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px;position:relative;transition:.2s;cursor:pointer}
+.parceiro:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.parceiro i{width:10px;height:10px;border-radius:50%;background:var(--c1);position:absolute;top:16px;right:16px}
+.parceiro b{font-size:16px}
+.parceiro b small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
+.parceiro span{font-size:13px;color:var(--muted)}
+.parceiro .n{color:var(--txt);font-weight:600}
+.parceiro.c-c1 i{background:var(--c1)} .parceiro.c-c1 b{color:var(--c1)}
+.parceiro.c-c2 i{background:var(--c2)} .parceiro.c-c2 b{color:var(--c2)}
+.parceiro.c-c3 i{background:var(--c3)} .parceiro.c-c3 b{color:var(--c3)}
+.mapa-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:13px}
+.leg span{display:inline-flex;align-items:center;gap:6px}
+.leg span::before{content:"";width:10px;height:10px;border-radius:50%;background:currentColor}
+.leg .c-c1{color:var(--c1)} .leg .c-c2{color:var(--c2)} .leg .c-c3{color:var(--c3)}
+#mapa{height:380px;border-radius:12px;border:1px solid var(--line);overflow:hidden}
+.pin{width:30px;height:30px;border-radius:50%;background:var(--c,#2563eb);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.sobre{display:grid;grid-template-columns:1fr 1fr;gap:32px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px}
+.lead{color:var(--muted);line-height:1.6}
+.pontos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pontos div h3{margin:0 0 4px;font-size:15px}
+.pontos div p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+.cats{display:flex;flex-wrap:wrap;gap:8px}
+.cats a{text-decoration:none;color:var(--txt);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:14px;transition:.15s;cursor:pointer}
+.cats a:hover{background:var(--txt);color:#fff;border-color:var(--txt)}
+.pecas{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.peca{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:.2s;border-top:4px solid var(--c1)}
+.peca:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.07)}
+.peca.c-c1{border-top-color:var(--c1)}
+.peca.c-c2{border-top-color:var(--c2)}
+.peca.c-c3{border-top-color:var(--c3)}
+.peca .foto{height:120px;background:linear-gradient(135deg,#eef2f7,#e2e8f0);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.peca .foto em{color:var(--muted);font-size:12px;font-style:normal}
+.peca .foto strong{font-size:11px;text-transform:uppercase;letter-spacing:.05em;background:#fff;padding:3px 10px;border-radius:999px;color:var(--txt)}
+.peca .pb{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.peca h3{margin:0;font-size:15px}
+.peca .ref{margin:0;font-size:12px;color:var(--muted);font-family:ui-monospace,monospace}
+.peca .loja{margin:0;font-size:13px;color:var(--muted)}
+.peca .pf{margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-top:10px}
+.peca .preco{font-size:18px;font-weight:700}
+.peca .res{padding:8px 14px;border:0;border-radius:8px;background:var(--txt);color:#fff;font-size:13px;cursor:pointer;transition:.15s}
+.peca .res:hover{opacity:.85}
+.peca .res.ok{background:var(--ok)}
+footer.foot{background:var(--card);border-top:1px solid var(--line);padding:28px 16px;text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--txt);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;transition:.3s;z-index:9999;opacity:0;pointer-events:none}
+.toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:780px){
+  .sobre{grid-template-columns:1fr}
+  .pontos{grid-template-columns:1fr}
+  .top nav a:not(.cta){display:none}
+}
 </style>
 </head>
 <body>
-<header>
-  <a class="logo" href="#">LisAM</a>
-  <nav>
-    <a href="#parceiros">Parceiros</a>
-    <a href="#lojas">Lojas</a>
-    <a href="#projeto">O projeto</a>
-    <a href="#pecas">Peças</a>
-  </nav>
-  <button class="hbtn" id="themeToggle" onclick="toggleTheme()">Modo escuro</button>
-  <a class="hbtn" href="login.html" style="text-decoration:none">Entrar</a>
+
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand">Auto<span>Leiria</span></a>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="stock.html">Stock</a>
+      <a href="login.html" class="cta">Entrar</a>
+    </nav>
+  </div>
 </header>
+
 <main class="wrap">
   <div class="hero">
     <h1>A peça certa, do parceiro certo, hoje.</h1>
@@ -155,20 +155,20 @@
   </section>
 </main>
 
+<footer class="foot">© AutoLeiria · Marketplace automóvel B2B · Leiria</footer>
 <div class="toast" id="toast"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-/* ---------- DADOS (substituem o PHP) ---------- */
 const parceiros = [
-  {cor:'c1', nome:'AutoLeiria Peças', desc:'Peças originais e equivalentes', local:'Leiria', pecas:7, nota:'4.8'},
+  {cor:'c1', nome:'AutoLeiria Peças', desc:'Peças originais e equivalentes', local:'Leiria',         pecas:7, nota:'4.8'},
   {cor:'c2', nome:'Leiria Motors',    desc:'Peças multimarca',              local:'Marinha Grande', pecas:6, nota:'4.6'},
-  {cor:'c3', nome:'Centro Auto',      desc:'Peças e acessórios',            local:'Leiria', pecas:5, nota:'4.9'}
+  {cor:'c3', nome:'Centro Auto',      desc:'Peças e acessórios',            local:'Leiria',         pecas:5, nota:'4.9'}
 ];
 const lojas = [
-  {nome:'AutoLeiria Peças', sigla:'AL', cor:'#2563eb', tipo:'Loja', info:'Rua das Peças 12, Leiria',  coords:[39.743,-8.807], gmaps:'https://maps.google.com/?q=39.743,-8.807'},
+  {nome:'AutoLeiria Peças', sigla:'AL', cor:'#2563eb', tipo:'Loja', info:'Rua das Peças 12, Leiria',           coords:[39.743,-8.807], gmaps:'https://maps.google.com/?q=39.743,-8.807'},
   {nome:'Leiria Motors',    sigla:'LM', cor:'#db2777', tipo:'Loja', info:'Av. da Liberdade 45, Marinha Grande', coords:[39.752,-8.932], gmaps:'https://maps.google.com/?q=39.752,-8.932'},
-  {nome:'Centro Auto',      sigla:'CA', cor:'#059669', tipo:'Loja', info:'Parque Industrial, Leiria', coords:[39.730,-8.780], gmaps:'https://maps.google.com/?q=39.730,-8.780'}
+  {nome:'Centro Auto',      sigla:'CA', cor:'#059669', tipo:'Loja', info:'Parque Industrial, Leiria',           coords:[39.730,-8.780], gmaps:'https://maps.google.com/?q=39.730,-8.780'}
 ];
 const categorias = ['Motor','Travagem','Suspensão','Elétrica','Arrefecimento','Iluminação','Pneus','Carroçaria'];
 const pecas = [
@@ -181,7 +181,6 @@ const pecas = [
   {titulo:'Pneu 205/55 R16',                ref:'PNE-4408', loja:'Centro Auto',      cor:'c3', preco:85,  estado:'Novo'}
 ];
 
-/* ---------- HELPERS ---------- */
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const eur = v => new Intl.NumberFormat('pt-PT').format(v) + ' €';
@@ -190,7 +189,6 @@ function toast(msg){
   clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('on'), 2200);
 }
 
-/* ---------- PARCEIROS ---------- */
 $('#parceirosList').innerHTML = parceiros.map(p => `
   <div class="parceiro c-${p.cor}" data-loja="${esc(p.nome)}">
     <i></i>
@@ -203,14 +201,12 @@ $('#parceirosList').innerHTML = parceiros.map(p => `
 
 $('#parceirosList').addEventListener('click', e => {
   const card = e.target.closest('.parceiro'); if (!card) return;
-  const loja = card.dataset.loja;
-  $('#q').value = loja;
-  filtrar();
+  $('#q').value = card.dataset.loja;
+  renderPecas();
   document.querySelector('#pecas').scrollIntoView({behavior:'smooth'});
-  toast('A mostrar peças de ' + loja);
+  toast('A mostrar peças de ' + card.dataset.loja);
 });
 
-/* ---------- LEGENDA + MAPA ---------- */
 $('#leg').innerHTML = parceiros.map(p => `<span class="c-${p.cor}">${esc(p.nome)}</span>`).join('');
 
 const map = L.map('mapa',{scrollWheelZoom:false}).setView([39.75,-8.83],11);
@@ -222,24 +218,22 @@ lojas.forEach(l => {
 });
 map.fitBounds(L.featureGroup(lojas.map(l => L.marker(l.coords))).getBounds().pad(0.25));
 
-/* ---------- CATEGORIAS ---------- */
-$('#cats').innerHTML = categorias.map(c => `<a href="#" data-cat="${esc(c)}">${esc(c)}</a>`).join('');
+$('#cats').innerHTML = categorias.map(c => `<a data-cat="${esc(c)}">${esc(c)}</a>`).join('');
 $('#cats').addEventListener('click', e => {
   const a = e.target.closest('a'); if (!a) return;
-  e.preventDefault();
   $('#q').value = a.dataset.cat;
-  filtrar();
+  renderPecas();
   document.querySelector('#pecas').scrollIntoView({behavior:'smooth'});
 });
 
-/* ---------- PEÇAS + FILTRO ---------- */
-function renderPecas(lista, q){
+function renderPecas(){
+  const q = $('#q').value.trim().toLowerCase();
+  const lista = !q ? pecas : pecas.filter(p =>
+    (p.titulo + ' ' + p.ref + ' ' + p.loja).toLowerCase().includes(q)
+  );
+  $('#pecasSub').innerHTML = (q ? `${lista.length} resultado(s) para "${esc($('#q').value.trim())}". ` : '') + 'Stock atualizado pelas próprias lojas.';
   const box = $('#pecas');
-  $('#pecasSub').innerHTML = (q ? `${lista.length} resultado(s) para "${esc(q)}". ` : '') + 'Stock atualizado pelas próprias lojas.';
-  if (!lista.length){
-    box.innerHTML = '<p class="sub">Sem resultados. Tente outra pesquisa.</p>';
-    return;
-  }
+  if (!lista.length){ box.innerHTML = '<p class="sub">Sem resultados. Tente outra pesquisa.</p>'; return; }
   box.innerHTML = lista.map(p => `
     <article class="peca c-${p.cor}">
       <div class="foto"><em>Foto em breve</em><strong>${esc(p.estado)}</strong></div>
@@ -254,23 +248,14 @@ function renderPecas(lista, q){
       </div>
     </article>`).join('');
 }
-function filtrar(){
-  const q = $('#q').value.trim().toLowerCase();
-  const lista = !q ? pecas : pecas.filter(p =>
-    (p.titulo + ' ' + p.ref + ' ' + p.loja).toLowerCase().includes(q)
-  );
-  renderPecas(lista, $('#q').value.trim());
-}
-$('#formProcura').addEventListener('submit', filtrar);
-$('#q').addEventListener('input', filtrar);
-
+$('#formProcura').addEventListener('submit', renderPecas);
+$('#q').addEventListener('input', renderPecas);
 $('#pecas').addEventListener('click', e => {
   const b = e.target.closest('.res'); if (!b) return;
   b.classList.add('ok'); b.textContent = 'Reservado ✓'; b.disabled = true;
   toast('Peça reservada! Receberá confirmação por email.');
 });
-
-renderPecas(pecas, '');
+renderPecas();
 </script>
 </body>
 </html>
