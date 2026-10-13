@@ -206,7 +206,7 @@ temaBtn.addEventListener('click', () => {
 /* Tipo de conta: Cliente / Empresa */
 const textos = {
   empresa: {
-    titulo: 'Junte a sua oficina à <span class="gtext">rede LisAM</span>.',
+    titulo: 'Junte a sua oficina à <span class="gtext">rede LAM</span>.',
     texto: 'Crie a conta da sua empresa e comece a pesquisar, reservar e receber peças das empresas parceiras do distrito de Leiria.',
     sub: 'Pedido de acesso para empresas e oficinas.',
     nome: 'Responsável', emailPh: 'geral@oficina.pt', btn: 'Pedir acesso'
@@ -240,6 +240,7 @@ function aplicarTipo(){
   $('#erro').hidden = true;
 }
 document.querySelectorAll('input[name="conta"]').forEach(r => r.addEventListener('change', aplicarTipo));
+if (new URLSearchParams(location.search).get('tipo') === 'cliente') document.querySelector('input[value="cliente"]').checked = true;
 aplicarTipo();
 
 /* Mostrar/ocultar palavra-passe */
