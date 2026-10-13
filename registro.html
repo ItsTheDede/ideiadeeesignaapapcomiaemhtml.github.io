@@ -164,13 +164,15 @@ header.top{background:var(--head);backdrop-filter:saturate(180%) blur(16px);-web
 
         <div class="grid2">
           <div class="campo full" data-so="empresa"><label for="empresa">Nome da empresa</label><input id="empresa" autocomplete="organization" placeholder="Oficina Exemplo, Lda."><p class="msg"></p></div>
-          <div class="campo" data-so="empresa"><label for="nif">NIF</label><input id="nif" inputmode="numeric" maxlength="9" placeholder="123456789"><p class="msg"></p></div>
+          <div class="campo" id="campoNif"><label for="nif">NIF</label><input id="nif" inputmode="numeric" maxlength="9" placeholder="123456789"><p class="msg"></p></div>
           <div class="campo" data-so="empresa"><label for="tipo">Tipo de empresa</label>
             <select id="tipo"><option value="">Selecione</option><option>Oficina</option><option>Centro de abate</option><option>Retificadora</option><option>Recondicionador</option><option>Outro</option></select><p class="msg"></p></div>
           <div class="campo"><label for="nome" id="nomeLbl">Responsável</label><input id="nome" autocomplete="name" placeholder="Nome completo"><p class="msg"></p></div>
           <div class="campo"><label for="tel">Telefone</label><input id="tel" type="tel" autocomplete="tel" placeholder="912 345 678"><p class="msg"></p></div>
           <div class="campo full"><label for="email">Email</label><input id="email" type="email" autocomplete="email" placeholder="geral@oficina.pt"><p class="msg"></p></div>
-          <div class="campo full"><label for="local">Localidade</label><input id="local" autocomplete="address-level2" placeholder="Leiria"><p class="msg"></p></div>
+          <div class="campo full"><label for="morada">Morada</label><input id="morada" autocomplete="street-address" placeholder="Rua, número, andar"><p class="msg"></p></div>
+          <div class="campo"><label for="cp">Código postal</label><input id="cp" inputmode="numeric" maxlength="8" autocomplete="postal-code" placeholder="2400-000"><p class="msg"></p></div>
+          <div class="campo"><label for="local">Localidade</label><input id="local" autocomplete="address-level2" placeholder="Leiria"><p class="msg"></p></div>
           <div class="campo"><label for="pw">Palavra-passe</label>
             <div class="pw"><input id="pw" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres"><button class="ver" type="button" data-alvo="pw">Mostrar</button></div>
             <div class="forca"><i></i><i></i><i></i><i></i><small id="forcaTxt"></small></div><p class="msg"></p></div>
@@ -226,6 +228,7 @@ function aplicarTipo(){
     c.hidden = t !== 'empresa';
     c.classList.remove('bad'); c.querySelector('.msg').textContent = '';
   });
+  $('#campoNif').classList.toggle('full', t === 'cliente');   // NIF ocupa a linha toda quando não há "tipo"
   $('#vantEmpresa').hidden = t !== 'empresa';
   $('#vantCliente').hidden = t !== 'cliente';
   $('#sideTitulo').innerHTML = x.titulo;
@@ -276,6 +279,8 @@ const regras = {
   nome:    v => v.trim().length >= 3 || (tipoConta() === 'empresa' ? 'Indique o nome do responsável.' : 'Indique o seu nome.'),
   tel:     v => /^(\+351)?\s?[29]\d{2}\s?\d{3}\s?\d{3}$/.test(v.trim()) || 'Telefone inválido.',
   email:   v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Email inválido.',
+  morada:  v => v.trim().length >= 5 || 'Indique a morada.',
+  cp:      v => /^\d{4}-\d{3}$/.test(v.trim()) || 'Código postal inválido (ex.: 2400-000).',
   local:   v => v.trim().length >= 2 || 'Indique a localidade.',
   pw:      v => v.length >= 8 || 'Mínimo de 8 caracteres.',
   pw2:     v => v === $('#pw').value || 'As palavras-passe não coincidem.'
@@ -290,6 +295,10 @@ function validar(id){
 }
 Object.keys(regras).forEach(id => $('#' + id).addEventListener('blur', () => validar(id)));
 $('#nif').addEventListener('input', e => e.target.value = e.target.value.replace(/\D/g, ''));
+$('#cp').addEventListener('input', e => {
+  const d = e.target.value.replace(/\D/g, '').slice(0, 7);
+  e.target.value = d.length > 4 ? d.slice(0, 4) + '-' + d.slice(4) : d;
+});
 
 /* Submissão (demonstração: não há servidor) */
 $('#form').addEventListener('submit', e => {
