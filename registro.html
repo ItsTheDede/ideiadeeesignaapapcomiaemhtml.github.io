@@ -39,14 +39,29 @@ header.top{background:var(--head);backdrop-filter:saturate(180%) blur(16px);-web
 .vant{display:flex;flex-direction:column;gap:12px}
 .vant div{display:flex;align-items:center;gap:12px;font-size:14.5px;color:#d3dcf0}
 .vant span{width:36px;height:36px;border-radius:11px;background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:17px;flex-shrink:0}
+.vant[hidden]{display:none}
 
 .form-wrap{display:flex;justify-content:center;align-items:center;padding:40px 20px}
 .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:38px;width:100%;max-width:520px;box-shadow:var(--shadow)}
 .card::before{content:"";position:absolute;inset:-1px;border-radius:27px;padding:1px;background:var(--grad);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.55;pointer-events:none}
 .card h2{margin:0 0 4px;font-size:28px}
-.card .sub{color:var(--muted);font-size:14px;margin:0 0 24px}
+.card .sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+
+/* Seletor Cliente / Empresa */
+.tipo-conta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 22px}
+.opt{position:relative;display:flex;align-items:center;gap:12px;padding:13px 14px;border:1.5px solid var(--line);border-radius:14px;cursor:pointer;background:var(--card);transition:.15s}
+.opt:hover{border-color:var(--brand)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .ico{width:38px;height:38px;border-radius:11px;background:var(--chipbg);display:grid;place-items:center;font-size:18px;flex-shrink:0;transition:.15s}
+.opt strong{display:block;color:var(--ink);font-size:14px;line-height:1.2}
+.opt small{display:block;color:var(--muted);font-size:12px;line-height:1.3;margin-top:2px}
+.opt.on{border-color:var(--brand);background:var(--soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 16%,transparent)}
+.opt.on .ico{background:var(--grad)}
+.opt:focus-within{outline:2px solid var(--brand);outline-offset:2px}
+
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
 .campo{margin-bottom:16px;display:flex;flex-direction:column;gap:7px}
+.campo[hidden]{display:none}
 .campo.full{grid-column:1/-1}
 .campo label{font-size:13px;font-weight:600;color:var(--ink)}
 .campo input,.campo select{padding:12px 15px;border:1px solid var(--line);border-radius:13px;font-size:15px;transition:.15s;background:var(--card);color:var(--ink);font-family:inherit;width:100%}
@@ -87,7 +102,7 @@ header.top{background:var(--head);backdrop-filter:saturate(180%) blur(16px);-web
   .login-page{grid-template-columns:1fr}
   .login-side{padding:44px 24px}
 }
-@media(max-width:520px){.grid2{grid-template-columns:1fr}.card{padding:28px 22px}}
+@media(max-width:520px){.grid2{grid-template-columns:1fr}.card{padding:28px 22px}.tipo-conta{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -109,13 +124,19 @@ header.top{background:var(--head);backdrop-filter:saturate(180%) blur(16px);-web
 <div class="login-page">
   <aside class="login-side">
     <div>
-      <h1>Junte a sua oficina à <span class="gtext">rede LisAM</span>.</h1>
-      <p>Crie a conta da sua empresa e comece a pesquisar, reservar e receber peças das empresas parceiras do distrito de Leiria.</p>
-      <div class="vant">
+      <h1 id="sideTitulo">Junte a sua oficina à <span class="gtext">rede LisAM</span>.</h1>
+      <p id="sideTexto">Crie a conta da sua empresa e comece a pesquisar, reservar e receber peças das empresas parceiras do distrito de Leiria.</p>
+      <div class="vant" id="vantEmpresa">
         <div><span>🔎</span>Pesquisa por referência OEM em todo o stock</div>
         <div><span>🛒</span>Reservas com um clique</div>
         <div><span>🚚</span>Entrega no próprio dia num raio de 30 km</div>
         <div><span>✓</span>Apenas empresas verificadas</div>
+      </div>
+      <div class="vant" id="vantCliente" hidden>
+        <div><span>🔎</span>Encontre a peça certa pela referência ou pelo carro</div>
+        <div><span>🛒</span>Reserve e levante junto de quem tem em stock</div>
+        <div><span>📍</span>Peças perto de si, no distrito de Leiria</div>
+        <div><span>✓</span>Vendedores verificados</div>
       </div>
     </div>
   </aside>
@@ -124,15 +145,29 @@ header.top{background:var(--head);backdrop-filter:saturate(180%) blur(16px);-web
     <div class="card" id="card">
       <form id="form" novalidate>
         <h2>Criar conta</h2>
-        <p class="sub">Pedido de acesso para empresas e oficinas.</p>
+        <p class="sub" id="subTxt">Pedido de acesso para empresas e oficinas.</p>
+
+        <div class="tipo-conta" role="radiogroup" aria-label="Tipo de conta">
+          <label class="opt" id="optCliente">
+            <input type="radio" name="conta" value="cliente">
+            <span class="ico">👤</span>
+            <span><strong>Cliente</strong><small>Particular</small></span>
+          </label>
+          <label class="opt on" id="optEmpresa">
+            <input type="radio" name="conta" value="empresa" checked>
+            <span class="ico">🔧</span>
+            <span><strong>Empresa</strong><small>Oficina, abate, retificadora…</small></span>
+          </label>
+        </div>
+
         <div class="erro" id="erro" role="alert" hidden></div>
 
         <div class="grid2">
-          <div class="campo full"><label for="empresa">Nome da empresa</label><input id="empresa" autocomplete="organization" placeholder="Oficina Exemplo, Lda."><p class="msg"></p></div>
-          <div class="campo"><label for="nif">NIF</label><input id="nif" inputmode="numeric" maxlength="9" placeholder="123456789"><p class="msg"></p></div>
-          <div class="campo"><label for="tipo">Tipo de empresa</label>
+          <div class="campo full" data-so="empresa"><label for="empresa">Nome da empresa</label><input id="empresa" autocomplete="organization" placeholder="Oficina Exemplo, Lda."><p class="msg"></p></div>
+          <div class="campo" data-so="empresa"><label for="nif">NIF</label><input id="nif" inputmode="numeric" maxlength="9" placeholder="123456789"><p class="msg"></p></div>
+          <div class="campo" data-so="empresa"><label for="tipo">Tipo de empresa</label>
             <select id="tipo"><option value="">Selecione</option><option>Oficina</option><option>Centro de abate</option><option>Retificadora</option><option>Recondicionador</option><option>Outro</option></select><p class="msg"></p></div>
-          <div class="campo"><label for="nome">Responsável</label><input id="nome" autocomplete="name" placeholder="Nome completo"><p class="msg"></p></div>
+          <div class="campo"><label for="nome" id="nomeLbl">Responsável</label><input id="nome" autocomplete="name" placeholder="Nome completo"><p class="msg"></p></div>
           <div class="campo"><label for="tel">Telefone</label><input id="tel" type="tel" autocomplete="tel" placeholder="912 345 678"><p class="msg"></p></div>
           <div class="campo full"><label for="email">Email</label><input id="email" type="email" autocomplete="email" placeholder="geral@oficina.pt"><p class="msg"></p></div>
           <div class="campo full"><label for="local">Localidade</label><input id="local" autocomplete="address-level2" placeholder="Leiria"><p class="msg"></p></div>
@@ -165,6 +200,44 @@ temaBtn.addEventListener('click', () => {
   try { localStorage.setItem('lisam-theme', novo); } catch (e) {}
   pintarTema();
 });
+
+/* Tipo de conta: Cliente / Empresa */
+const textos = {
+  empresa: {
+    titulo: 'Junte a sua oficina à <span class="gtext">rede LisAM</span>.',
+    texto: 'Crie a conta da sua empresa e comece a pesquisar, reservar e receber peças das empresas parceiras do distrito de Leiria.',
+    sub: 'Pedido de acesso para empresas e oficinas.',
+    nome: 'Responsável', emailPh: 'geral@oficina.pt', btn: 'Pedir acesso'
+  },
+  cliente: {
+    titulo: 'Encontre a peça certa, <span class="gtext">perto de si</span>.',
+    texto: 'Crie a sua conta de cliente para pesquisar e reservar peças junto das empresas parceiras do distrito de Leiria.',
+    sub: 'Conta de cliente particular.',
+    nome: 'Nome', emailPh: 'nome@email.pt', btn: 'Criar conta'
+  }
+};
+const tipoConta = () => document.querySelector('input[name="conta"]:checked').value;
+
+function aplicarTipo(){
+  const t = tipoConta(), x = textos[t];
+  $('#optCliente').classList.toggle('on', t === 'cliente');
+  $('#optEmpresa').classList.toggle('on', t === 'empresa');
+  document.querySelectorAll('[data-so="empresa"]').forEach(c => {
+    c.hidden = t !== 'empresa';
+    c.classList.remove('bad'); c.querySelector('.msg').textContent = '';
+  });
+  $('#vantEmpresa').hidden = t !== 'empresa';
+  $('#vantCliente').hidden = t !== 'cliente';
+  $('#sideTitulo').innerHTML = x.titulo;
+  $('#sideTexto').textContent = x.texto;
+  $('#subTxt').textContent = x.sub;
+  $('#nomeLbl').textContent = x.nome;
+  $('#email').placeholder = x.emailPh;
+  $('#btn').textContent = x.btn;
+  $('#erro').hidden = true;
+}
+document.querySelectorAll('input[name="conta"]').forEach(r => r.addEventListener('change', aplicarTipo));
+aplicarTipo();
 
 /* Mostrar/ocultar palavra-passe */
 document.querySelectorAll('.ver').forEach(b => b.addEventListener('click', () => {
@@ -200,7 +273,7 @@ const regras = {
   empresa: v => v.trim().length >= 2 || 'Indique o nome da empresa.',
   nif:     v => nifValido(v.trim()) || 'NIF inválido.',
   tipo:    v => !!v || 'Selecione o tipo de empresa.',
-  nome:    v => v.trim().length >= 3 || 'Indique o nome do responsável.',
+  nome:    v => v.trim().length >= 3 || (tipoConta() === 'empresa' ? 'Indique o nome do responsável.' : 'Indique o seu nome.'),
   tel:     v => /^(\+351)?\s?[29]\d{2}\s?\d{3}\s?\d{3}$/.test(v.trim()) || 'Telefone inválido.',
   email:   v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Email inválido.',
   local:   v => v.trim().length >= 2 || 'Indique a localidade.',
@@ -208,7 +281,9 @@ const regras = {
   pw2:     v => v === $('#pw').value || 'As palavras-passe não coincidem.'
 };
 function validar(id){
-  const el = $('#' + id), campo = el.closest('.campo'), r = regras[id](el.value);
+  const el = $('#' + id), campo = el.closest('.campo');
+  if (campo.hidden) return true;               // campos de empresa ignorados para clientes
+  const r = regras[id](el.value);
   campo.classList.toggle('bad', r !== true);
   campo.querySelector('.msg').textContent = r === true ? '' : r;
   return r === true;
@@ -227,10 +302,15 @@ $('#form').addEventListener('submit', e => {
     return;
   }
   erro.hidden = true;
+  const empresa = tipoConta() === 'empresa';
   const btn = $('#btn'); btn.disabled = true; btn.textContent = 'A enviar…';
   setTimeout(() => {
-    $('#card').innerHTML = `<div class="ok-box"><div class="tick">✓</div><h2>Pedido enviado</h2>
-      <p>Vamos verificar os dados da sua empresa e enviar a confirmação para <b>${$('#email').value.trim().replace(/[&<>"']/g, '')}</b>.</p>
+    const mail = $('#email').value.trim().replace(/[&<>"']/g, '');
+    $('#card').innerHTML = `<div class="ok-box"><div class="tick">✓</div>
+      <h2>${empresa ? 'Pedido enviado' : 'Conta criada'}</h2>
+      <p>${empresa
+        ? `Vamos verificar os dados da sua empresa e enviar a confirmação para <b>${mail}</b>.`
+        : `Enviámos um email de confirmação para <b>${mail}</b>. Já pode iniciar sessão.`}</p>
       <a class="entrar" href="login.html">Ir para o login</a></div>`;
   }, 900);
 });
