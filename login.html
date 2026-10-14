@@ -452,6 +452,7 @@ footer.foot{background:#070b18;color:#94a3b8;padding:56px 20px 28px;margin-top:2
 <div class="toast" id="toast"></div>
 
 <script>
+/* ---------- Utilitários globais ---------- */
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const eur = v => new Intl.NumberFormat('pt-PT').format(v) + ' €';
@@ -496,9 +497,29 @@ function reveal(root = document){
     else { el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(countUp); }
   });
 }
-
 </script>
+
 <script>
+/* ---------- Textos dinâmicos por tipo de conta ---------- */
+const textos = {
+  empresa: {
+    eyebrow: 'Área de parceiros',
+    titulo: 'Bem-vindo de volta à <span class="gtext">oficina</span>.',
+    texto: 'Entre na sua conta para reservar peças, acompanhar encomendas e levantar na loja ou receber no próprio dia.',
+    sub: 'Acesso para oficinas e empresas parceiras.',
+    emailPh: 'oficina@exemplo.pt',
+    dica: 'oficina@exemplo.pt / 123456'
+  },
+  cliente: {
+    eyebrow: 'Área de cliente',
+    titulo: 'Bem-vindo de volta à <span class="gtext">estrada</span>.',
+    texto: 'Entre na sua conta para pesquisar peças, guardar reservas e levantar junto de quem tem stock, perto de si.',
+    sub: 'Acesso para clientes particulares.',
+    emailPh: 'cliente@exemplo.pt',
+    dica: 'demo@lam.pt / demo'
+  }
+};
+
 const tipoConta = () => document.querySelector('input[name="conta"]:checked').value;
 
 function aplicarTipo(){
@@ -514,20 +535,27 @@ function aplicarTipo(){
   $('#email').placeholder = x.emailPh;
   $('#erro').style.display = 'none';
 }
+
 document.querySelectorAll('input[name="conta"]').forEach(r => r.addEventListener('change', aplicarTipo));
-if (new URLSearchParams(location.search).get('tipo') === 'cliente') document.querySelector('input[value="cliente"]').checked = true;
+if (new URLSearchParams(location.search).get('tipo') === 'cliente') {
+  document.querySelector('input[value="cliente"]').checked = true;
+}
 aplicarTipo();
 
-/* Palavra-passe */
+/* ---------- Palavra-passe (mostrar/ocultar) ---------- */
 $('#ver').addEventListener('click', () => {
   const p = $('#pass');
   const mostrar = p.type === 'password';
   p.type = mostrar ? 'text' : 'password';
   $('#ver').textContent = mostrar ? 'Ocultar' : 'Mostrar';
 });
-$('#esqueci').addEventListener('click', e => { e.preventDefault(); toast('Pedido de recuperação enviado (demo).'); });
 
-/* Contas de demonstração (sem servidor) */
+$('#esqueci').addEventListener('click', e => {
+  e.preventDefault();
+  toast('Pedido de recuperação enviado (demo).');
+});
+
+/* ---------- Contas de demonstração (sem servidor) ---------- */
 const utilizadoresDemo = {
   'oficina@exemplo.pt': { nome:'Oficina Demo', pass:'123456', tipo:'empresa' },
   'demo@lam.pt':        { nome:'Demo',         pass:'demo',   tipo:'cliente' }
