@@ -528,24 +528,24 @@ const categorias = [
   ['Arrefecimento','❄️'],['Iluminação','💡'],['Pneus','🛞'],['Carroçaria','🚗']
 ];
 const parceiros = [
-  {cor:'c1', nome:'Leiria Peças',  sigla:'LP', desc:'Peças originais e equivalentes', local:'Leiria',         nota:'4.8'},
-  {cor:'c2', nome:'Leiria Motors', sigla:'LM', desc:'Peças multimarca',              local:'Marinha Grande', nota:'4.6'},
-  {cor:'c3', nome:'Centro Auto',   sigla:'CA', desc:'Peças e acessórios',            local:'Leiria',         nota:'4.9'}
+  {cor:'c1', nome:'Samiparts',  sigla:'LP', desc:'Peças originais e equivalentes', local:'Flandes',         nota:'4.8'},
+  {cor:'c2', nome:'Guipeças', sigla:'LM', desc:'Peças multimarca',              local:'Marinha Grande', nota:'4.6'},
+  {cor:'c3', nome:'Gamipeças',   sigla:'CA', desc:'Peças e acessórios',            local:'Pombal',         nota:'4.9'}
 ];
 const lojas = [
-  {nome:'Leiria Peças',  sigla:'LP', cor:'#2563eb', tipo:'Loja', info:'Rua das Peças 12, Leiria',           coords:[39.743,-8.807], gmaps:'https://maps.google.com/?q=39.743,-8.807'},
-  {nome:'Leiria Motors', sigla:'LM', cor:'#db2777', tipo:'Loja', info:'Av. da Liberdade 45, Marinha Grande', coords:[39.752,-8.932], gmaps:'https://maps.google.com/?q=39.752,-8.932'},
-  {nome:'Centro Auto',   sigla:'CA', cor:'#059669', tipo:'Loja', info:'Parque Industrial, Leiria',           coords:[39.730,-8.780], gmaps:'https://maps.google.com/?q=39.730,-8.780'}
+  {nome:'Samiparts',  sigla:'SP', cor:'#2563eb', tipo:'Loja', info:'R. da Primavera B1, 3100-339 Flandes',           coords:[39.90397077796481, -8.633328093923474], gmaps:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3060.679557972519!2d-8.636278523758442!3d39.903806171526675!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2242ad02d70a0b%3A0xcbb75624fabda40!2sSamiparts%20-%20Loja%20Pombal!5e0!3m2!1spt-PT!2spt!4v1791985627806!5m2!1spt-PT!2spt'},
+  {nome:'Guipeças', sigla:'GP', cor:'#db2777', tipo:'Loja', info:'Av. Nossa Sra. da Guia 124, 3105-089 Pombal', coords:[39.944691581714224, -8.788271679867668], gmaps:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d382.3568059311385!2d-8.788602932815367!3d39.94464531343782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd226a57df9964df%3A0x926564241f6de896!2sGuipe%C3%A7as%20Do%20Oeste%20Lda!5e0!3m2!1spt-PT!2spt!4v1791985551360!5m2!1spt-PT!2spt'},
+  {nome:'Gamipeças',   sigla:'GP', cor:'#059669', tipo:'Loja', info:'R. António Champalimaud, 3100-578 Pombal',           coords:[39.92511456042214, -8.631716401323908], gmaps:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3059.7326230887106!2d-8.634366423757498!3d39.92499937152296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd226669ed8d3ca5%3A0x9cdaabe1bd17885!2sGAMIPE%C3%87AS%20%2C%20LDA%20Pe%C3%A7as%20Auto!5e0!3m2!1spt-PT!2spt!4v1791985714778!5m2!1spt-PT!2spt'}
 ];
 const iconeCat = Object.fromEntries(categorias);
 const pecas = [
-  {titulo:'Pastilhas de travão dianteiras', ref:'BRK-1024', cat:'Travagem',      loja:'Leiria Peças',  cor:'c1', preco:120, estado:'Novo'},
-  {titulo:'Filtro de óleo',                 ref:'FLT-2210', cat:'Motor',         loja:'Leiria Peças',  cor:'c1', preco:15,  estado:'Novo'},
-  {titulo:'Amortecedor traseiro',           ref:'AMT-7781', cat:'Suspensão',     loja:'Leiria Peças',  cor:'c1', preco:95,  estado:'Usado'},
-  {titulo:'Alternador 90A',                 ref:'ALT-5540', cat:'Elétrica',      loja:'Leiria Motors', cor:'c2', preco:210, estado:'Recondicionado'},
-  {titulo:'Radiador de água',               ref:'RAD-3302', cat:'Arrefecimento', loja:'Leiria Motors', cor:'c2', preco:140, estado:'Novo'},
-  {titulo:'Farol dianteiro esquerdo',       ref:'FAR-9910', cat:'Iluminação',    loja:'Centro Auto',   cor:'c3', preco:320, estado:'Novo'},
-  {titulo:'Pneu 205/55 R16',                ref:'PNE-4408', cat:'Pneus',         loja:'Centro Auto',   cor:'c3', preco:85,  estado:'Novo'}
+  {titulo:'Pastilhas de travão dianteiras', ref:'BRK-1024', cat:'Travagem',      loja:'Samiparts',  cor:'c1', preco:120, estado:'Novo'},
+  {titulo:'Filtro de óleo',                 ref:'FLT-2210', cat:'Motor',         loja:'Samiparts',  cor:'c1', preco:15,  estado:'Novo'},
+  {titulo:'Amortecedor traseiro',           ref:'AMT-7781', cat:'Suspensão',     loja:'Samiparts',  cor:'c1', preco:95,  estado:'Usado'},
+  {titulo:'Alternador 90A',                 ref:'ALT-5540', cat:'Elétrica',      loja:'Guipeças', cor:'c2', preco:210, estado:'Recondicionado'},
+  {titulo:'Radiador de água',               ref:'RAD-3302', cat:'Arrefecimento', loja:'Guipeças', cor:'c2', preco:140, estado:'Novo'},
+  {titulo:'Farol dianteiro esquerdo',       ref:'FAR-9910', cat:'Iluminação',    loja:'Gamipeças',   cor:'c3', preco:320, estado:'Novo'},
+  {titulo:'Pneu 205/55 R16',                ref:'PNE-4408', cat:'Pneus',         loja:'Gamipeças',   cor:'c3', preco:85,  estado:'Novo'}
 ];
 
 let catAtiva = '', estAtivo = '';
