@@ -499,25 +499,6 @@ function reveal(root = document){
 
 </script>
 <script>
-/* Tipo de conta: Cliente / Empresa */
-const textos = {
-  empresa: {
-    eyebrow: 'Área de parceiros',
-    titulo: 'Bem-vindo de volta à <span class="gtext">oficina</span>.',
-    texto: 'Entre na sua conta para reservar peças, acompanhar encomendas e levantar na loja ou receber no próprio dia.',
-    sub: 'Acesso para oficinas e empresas parceiras.',
-    emailPh: 'oficina@exemplo.pt',
-    dica: 'oficina@exemplo.pt / 123456'
-  },
-  cliente: {
-    eyebrow: 'Área de cliente',
-    titulo: 'Bem-vindo de volta à <span class="gtext">LAM</span>.',
-    texto: 'Entre na sua conta para pesquisar peças, acompanhar as suas reservas e levantar junto de quem as tem em stock.',
-    sub: 'Acesso para clientes particulares.',
-    emailPh: 'nome@email.pt',
-    dica: 'demo@lam.pt / demo'
-  }
-};
 const tipoConta = () => document.querySelector('input[name="conta"]:checked').value;
 
 function aplicarTipo(){
