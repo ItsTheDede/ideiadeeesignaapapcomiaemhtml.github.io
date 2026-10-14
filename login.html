@@ -512,7 +512,7 @@ function aplicarTipo(){
   $('#sideTexto').textContent = x.texto;
   $('#subTxt').textContent = x.sub;
   $('#email').placeholder = x.emailPh;
-  $('#linkCriar').href = 'criar-conta.html?tipo=' + t;   // o registo abre já no tipo escolhido
+  $('#linkCriar').href = 'registro.html?tipo=' + t;   // o registo abre já no tipo escolhido
   $('#erro').style.display = 'none';
 }
 document.querySelectorAll('input[name="conta"]').forEach(r => r.addEventListener('change', aplicarTipo));
